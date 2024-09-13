@@ -1,6 +1,8 @@
 """Memory, puzzle game of number pairs.
 
+
 Exercises:
+
 
 1. Count and print how many taps occur.
 2. Decrease the number of tiles to a 4x4 grid.
@@ -9,15 +11,21 @@ Exercises:
 5. Use letters instead of tiles.
 """
 
-from random import *
-from turtle import *
 
+from random import shuffle
+from turtle import (addshape, done, onscreenclick, ontimer, shape,
+                    stamp, setup, hideturtle, tracer, update, clear, goto,
+                    up, down, color, begin_fill, forward,
+                    left, end_fill, write)
 from freegames import path
+
 
 car = path('car.gif')
 tiles = list(range(32)) * 2
 state = {'mark': None}
 hide = [True] * 64
+
+
 
 
 def square(x, y):
@@ -33,9 +41,13 @@ def square(x, y):
     end_fill()
 
 
+
+
 def index(x, y):
     """Convert (x, y) coordinates to tiles index."""
     return int((x + 200) // 50 + ((y + 200) // 50) * 8)
+
+
 
 
 def xy(count):
@@ -43,10 +55,13 @@ def xy(count):
     return (count % 8) * 50 - 200, (count // 8) * 50 - 200
 
 
+
+
 def tap(x, y):
     """Update mark and hidden tiles based on tap."""
     spot = index(x, y)
     mark = state['mark']
+
 
     if mark is None or mark == spot or tiles[mark] != tiles[spot]:
         state['mark'] = spot
@@ -56,6 +71,8 @@ def tap(x, y):
         state['mark'] = None
 
 
+
+
 def draw():
     """Draw image and tiles."""
     clear()
@@ -63,12 +80,15 @@ def draw():
     shape(car)
     stamp()
 
+
     for count in range(64):
         if hide[count]:
             x, y = xy(count)
             square(x, y)
 
+
     mark = state['mark']
+
 
     if mark is not None and hide[mark]:
         x, y = xy(mark)
@@ -77,8 +97,11 @@ def draw():
         color('black')
         write(tiles[mark], font=('Arial', 30, 'normal'))
 
+
     update()
     ontimer(draw, 100)
+
+
 
 
 shuffle(tiles)
